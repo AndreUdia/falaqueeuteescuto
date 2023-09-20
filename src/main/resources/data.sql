@@ -1,0 +1,1 @@
+insert into cliente(uuid, email, nome, data_nascimento) values ('12312-12311-123-123', 'andre@souto.com', 'andre', '1983-07-03')
