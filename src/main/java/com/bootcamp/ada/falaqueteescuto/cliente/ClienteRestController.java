@@ -1,9 +1,12 @@
 package com.bootcamp.ada.falaqueteescuto.cliente;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -13,6 +16,8 @@ import java.util.Optional;
 public class ClienteRestController {
 
     private final ClienteService service;
+    Logger logger = LoggerFactory.getLogger(ClienteRestController.class);
+
 
     public ClienteRestController(ClienteService service) {
         this.service = service;
@@ -48,6 +53,7 @@ public class ClienteRestController {
             Cliente clienteSalvo = this.service.criarCliente(clienteAtualizado);
             return ResponseEntity.ok(clienteSalvo);
         } else {
+            logger.debug(LocalDateTime.now() + ": Tentativa de edição do cliente de Id: " + id + " - não encontrado");
             return ResponseEntity.notFound().build();
         }
     }
@@ -60,6 +66,7 @@ public class ClienteRestController {
             this.service.excluirCliente(id);
             return ResponseEntity.noContent().build();
         } else {
+            logger.debug(LocalDateTime.now() + ": Tentativa de exclusão do cliente de Id: " + id + " - não encontrado");
             return ResponseEntity.notFound().build();
         }
     }
@@ -77,6 +84,7 @@ public class ClienteRestController {
 
             return ResponseEntity.ok(clienteSalvo);
         } else {
+            logger.debug(LocalDateTime.now() + ": Tentativa de atualização do cliente de Id: " + id + " - não encontrado");
             return ResponseEntity.notFound().build();
         }
     }

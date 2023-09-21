@@ -1,8 +1,11 @@
 package com.bootcamp.ada.falaqueteescuto.empresa;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -12,6 +15,8 @@ import java.util.Optional;
 public class EmpresaRestController {
 
     private final EmpresaService service;
+
+    Logger logger = LoggerFactory.getLogger(EmpresaRestController.class);
 
     public EmpresaRestController(EmpresaService service) {
         this.service = service;
@@ -46,6 +51,7 @@ public class EmpresaRestController {
             Empresa empresaSalva = this.service.criarEmpresa(empresaAtualizada);
             return ResponseEntity.ok(empresaSalva);
         } else {
+            logger.debug(LocalDateTime.now() + ": Tentativa de edição de empresa de Id: " + id + " - não encontrada");
             return ResponseEntity.notFound().build();
         }
     }
@@ -58,6 +64,7 @@ public class EmpresaRestController {
             this.service.excluirEmpresa(id);
             return ResponseEntity.noContent().build();
         } else {
+            logger.debug(LocalDateTime.now() + ": Tentativa de exclusão de empresa de Id: " + id + " - não encontrada");
             return ResponseEntity.notFound().build();
         }
     }
@@ -75,6 +82,7 @@ public class EmpresaRestController {
 
             return ResponseEntity.ok(empresaSalva);
         } else {
+            logger.debug(LocalDateTime.now() + ": Tentativa de atualização de empresa de Id: " + id + " - não encontrada");
             return ResponseEntity.notFound().build();
         }
     }
