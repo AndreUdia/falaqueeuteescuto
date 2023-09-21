@@ -3,7 +3,9 @@ package com.bootcamp.ada.falaqueteescuto.cliente;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -59,6 +61,35 @@ public class ClienteRestController {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Cliente> updateCliente(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        Optional<Cliente> clinteOptional = this.service.buscarClientePorId(id);
+
+        if (clinteOptional.isPresent()) {
+            Cliente clienteAtualizado = clinteOptional.get();
+
+            atualizaDadosDoCliente(clienteAtualizado, updates);
+
+            Cliente clienteSalvo = this.service.criarCliente(clienteAtualizado);
+
+            return ResponseEntity.ok(clienteSalvo);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    private void atualizaDadosDoCliente(Cliente cliente, Map<String, Object> updates) {
+        if (updates.containsKey("nome")) {
+            cliente.setNome((String) updates.get("nome"));
+        }
+        if (updates.containsKey("email")) {
+            cliente.setEmail((String) updates.get("email"));
+        }
+        if (updates.containsKey("dataNascimento")) {
+            cliente.setDataNascimento((LocalDate) updates.get("dataNascimento"));
         }
     }
 }
