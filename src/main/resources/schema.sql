@@ -7,3 +7,5 @@ CREATE TABLE cliente
     data_nascimento date,
     CONSTRAINT pk_cliente PRIMARY KEY (id)
 );
+
+CREATE SEQUENCE CLIENTE_SEQ START WITH 1 INCREMENT BY 1;
