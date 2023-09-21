@@ -19,15 +19,15 @@ public class ClienteService {
     }
 
     public Cliente criarCliente(Cliente cliente) {
-        return repository.save(cliente);
+        return this.repository.save(cliente);
     }
 
     public Optional<Cliente> buscarClientePorId(Long id) {
-        return repository.findById(id);
+        return this.repository.findById(id);
     }
 
     public void excluirCliente(Long id) {
-        repository.deleteById(id);
+        this.repository.deleteById(id);
     }
 
 }
